@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,27 +12,66 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Whatsapp Clone',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 43, 88, 46),
-          title: const Text(
-            'Whatsapp Clone',
-            style: TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 43, 88, 46),
+            title: const Text(
+              'Whatsapp Clone',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search, color: Colors.white),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert, color: Colors.white),
+              ),
+            ],
+            bottom: const TabBar(
+              labelColor: Colors.white,
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(
+                  icon: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                  ),
+                ),
+                Tab(
+                  text: 'CHATS',
+                ),
+                Tab(
+                  text: 'STATUS',
+                ),
+                Tab(
+                  text: 'CALLS',
+                ),
+              ],
+            ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search, color: Colors.white),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert, color: Colors.white),
-            ),
-          ],
-        ),
-        body: const Center(
-          child: Text('Whatsapp Clone'),
+          body: const TabBarView(
+            children: [
+              Center(
+                child: Text('Camera'),
+              ),
+              Center(
+                child: Text('Chats'),
+              ),
+              Center(
+                child: Text('Status'),
+              ),
+              Center(
+                child: Text('Calls'),
+              ),
+            ],
+          ),
         ),
       ),
     );
