@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:faker/faker.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  var faker = Faker();
 
   @override
   Widget build(BuildContext context) {
@@ -56,24 +57,46 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(
+              const Center(
                 child: Text('Camera'),
               ),
-              Center(
-                child: Text('Chats'),
-              ),
-              Center(
+              FakeChat(faker: faker),
+              const Center(
                 child: Text('Status'),
               ),
-              Center(
+              const Center(
                 child: Text('Calls'),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FakeChat extends StatelessWidget {
+  final Faker faker;
+
+  FakeChat({required this.faker});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 30,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundImage:
+                NetworkImage("https://picsum.photos/id/$index/200/300"),
+          ),
+          title: Text(faker.person.name()),
+          subtitle: Text(faker.lorem.sentence()),
+          trailing: Text(faker.date.justTime()),
+        );
+      },
     );
   }
 }
