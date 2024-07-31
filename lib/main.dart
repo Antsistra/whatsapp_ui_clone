@@ -63,16 +63,39 @@ class MyApp extends StatelessWidget {
                 child: Text('Camera'),
               ),
               FakeChat(faker: faker),
-              const Center(
-                child: Text('Status'),
-              ),
-              const Center(
-                child: Text('Calls'),
-              ),
+              FakeStatus(faker: faker),
+              FakeCall(faker: faker),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FakeStatus extends StatelessWidget {
+  final Faker faker;
+  FakeStatus({required this.faker});
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CircleAvatar(
+            radius: 26,
+            backgroundColor: Colors.grey,
+            child: CircleAvatar(
+              radius: 23,
+              backgroundImage:
+                  NetworkImage("https://picsum.photos/id/$index/200/300"),
+            ),
+          ),
+          title: Text(faker.person.name()),
+          subtitle: Text("Tap to view status"),
+          trailing: Text(faker.date.justTime()),
+        );
+      },
     );
   }
 }
@@ -97,6 +120,28 @@ class FakeChat extends StatelessWidget {
           trailing: Text(faker.date.justTime()),
         );
       },
+    );
+  }
+}
+
+class FakeCall extends StatelessWidget {
+  final Faker faker;
+  FakeCall({required this.faker});
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: List.generate(
+        8,
+        (index) => ListTile(
+          leading: CircleAvatar(
+            backgroundImage:
+                NetworkImage("https://picsum.photos/id/$index/200/300"),
+          ),
+          title: Text(faker.animal.name()),
+          subtitle: Text("Today, " + faker.date.justTime()),
+          trailing: Icon(Icons.call),
+        ),
+      ),
     );
   }
 }
