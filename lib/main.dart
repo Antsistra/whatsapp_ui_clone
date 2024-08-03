@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
                 child: Text('Camera'),
               ),
               FakeChat(faker: faker),
-              FakeStatus(faker: faker),
+              ListStatus(),
               FakeCall(faker: faker),
             ],
           ),
@@ -73,29 +75,120 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class FakeStatus extends StatelessWidget {
-  final Faker faker;
-  FakeStatus({required this.faker});
+class ListStatus extends StatelessWidget {
+  final List<Map<String, dynamic>> Status = [
+    {
+      'id': 1,
+      'link': 'https://picsum.photos/id/1/200/300',
+    },
+    {
+      'id': 2,
+      'link': 'https://picsum.photos/id/2/200/300',
+    },
+    {
+      'id': 3,
+      'link': 'https://picsum.photos/id/3/200/300',
+    },
+    {
+      'id': 4,
+      'link': 'https://picsum.photos/id/4/200/300',
+    },
+    {
+      'id': 5,
+      'link': 'https://picsum.photos/id/5/200/300',
+    },
+    {
+      'id': 6,
+      'link': 'https://picsum.photos/id/5/200/300',
+    },
+    {
+      'id': 7,
+      'link': 'https://picsum.photos/id/5/200/300',
+    },
+    {
+      'id': 8,
+      'link': 'https://picsum.photos/id/5/200/300',
+    },
+    {
+      'id': 9,
+      'link': 'https://picsum.photos/id/5/200/300',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 4,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 26,
-            backgroundColor: Colors.grey,
-            child: CircleAvatar(
-              radius: 23,
-              backgroundImage:
-                  NetworkImage("https://picsum.photos/id/$index/200/300"),
-            ),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Status",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          title: Text(faker.person.name()),
-          subtitle: Text("Tap to view status"),
-          trailing: Text(faker.date.justTime()),
-        );
-      },
+          margin: EdgeInsets.fromLTRB(14, 12, 12, 4),
+        ),
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: Status.map((data) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.grey, // Set the border color
+                        width: 3, // Set the border width
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.grey,
+                      backgroundImage: NetworkImage(
+                        data['link'],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            )),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Saluran",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              Text(
+                "Jelajahi  >",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[800],
+                    fontSize: 14),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          // Use Expanded to allow ListView to take up remaining space
+          child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "https://picsum.photos/id/$index/200/300",
+                  ),
+                ),
+                title: Text(faker.person.name()),
+                subtitle: Text(faker.lorem.sentence()),
+                trailing: Text(faker.date.justTime()),
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 }
